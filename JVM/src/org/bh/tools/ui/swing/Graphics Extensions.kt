@@ -1,6 +1,6 @@
 package org.bh.tools.ui.swing
 
-import org.bh.tools.base.struct.coord.IntPoint
+import org.bh.tools.base.struct.coord.Point
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.RenderingHints.*
@@ -14,15 +14,17 @@ import java.awt.RenderingHints.*
  * @since 2016-11-06
  */
 
-fun Graphics.drawLine(start: IntPoint, end: IntPoint)
-        = drawLine(start.x, start.y, end.x, end.y)
+fun Graphics.drawLine(start: Point<*>, end: Point<*>) {
+    val startInt = Point<Int>(start)
+    val endInt = Point<Int>(end)
+    drawLine(startInt.x, startInt.y, endInt.x, endInt.y)
+}
 
 var Graphics.antiAlias: Boolean
     get() {
-        if (this is Graphics2D) {
-            return this.renderingHints[KEY_ANTIALIASING] != VALUE_ANTIALIAS_OFF
-        } else {
-            return false
+        return when (this) {
+            is Graphics2D -> this.renderingHints[KEY_ANTIALIASING] != VALUE_ANTIALIAS_OFF
+            else -> false
         }
     }
     set(newValue) {
