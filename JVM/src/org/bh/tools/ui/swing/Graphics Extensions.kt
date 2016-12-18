@@ -1,6 +1,6 @@
 package org.bh.tools.ui.swing
 
-import org.bh.tools.base.math.geometry.Line
+import org.bh.tools.base.math.geometry.LineSegment
 import org.bh.tools.base.math.geometry.Rect
 import org.bh.tools.base.math.geometry.floatValue
 import org.bh.tools.base.math.int32Value
@@ -17,7 +17,7 @@ import java.awt.RenderingHints.*
  * @since 2016-11-06
  */
 
-fun Graphics.drawLine(line: Line<*>) {
+fun Graphics.drawLine(line: LineSegment<*>) {
     when (this) {
         is Graphics2D -> this.draw(line.floatValue.awtShapeValue)
         else -> this.drawLine(line.start.x.int32Value, line.start.y.int32Value, line.end.x.int32Value, line.end.y.int32Value)

@@ -2,7 +2,7 @@ package org.bh.tools.ui.swing
 
 import org.bh.tools.base.abstraction.BHFloat
 import org.bh.tools.base.math.float32Value
-import org.bh.tools.base.math.geometry.FloatLine
+import org.bh.tools.base.math.geometry.FloatLineSegment
 import org.bh.tools.base.math.geometry.FloatPoint
 import org.bh.tools.base.math.geometry.FloatRect
 import org.bh.tools.base.math.geometry.Point
@@ -22,7 +22,7 @@ import java.awt.geom.Rectangle2D
  */
 val FloatRect.awtShapeValue: Shape get() = this.awtValue
 
-val FloatLine.awtShapeValue: Shape get() = object : Shape {
+val FloatLineSegment.awtShapeValue: Shape get() = object : Shape {
 
     private val line get() = this@awtShapeValue
 
@@ -91,8 +91,8 @@ val FloatLine.awtShapeValue: Shape get() = object : Shape {
             = r != null && intersects(FloatRect(r))
 
     fun intersects(r: FloatRect): Boolean
-            = line.intersects(FloatLine(r.minXminY, r.maxXmaxY))
-            || line.intersects(FloatLine(r.maxXminY, r.minXmaxY))
+            = line.intersects(FloatLineSegment(r.minXminY, r.maxXmaxY))
+            || line.intersects(FloatLineSegment(r.maxXminY, r.minXmaxY))
 
     override fun getBounds(): Rectangle = line.bounds.awtValue.bounds
 
