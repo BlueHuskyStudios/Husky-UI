@@ -2,10 +2,9 @@ package org.bh.tools.ui.swing
 
 import org.bh.tools.base.abstraction.BHFloat
 import org.bh.tools.base.math.float32Value
+import org.bh.tools.base.math.geometry.ComputablePoint
 import org.bh.tools.base.math.geometry.FloatLineSegment
-import org.bh.tools.base.math.geometry.FloatPoint
 import org.bh.tools.base.math.geometry.FloatRect
-import org.bh.tools.base.math.geometry.Point
 import java.awt.Rectangle
 import java.awt.Shape
 import java.awt.geom.AffineTransform
@@ -33,7 +32,7 @@ val FloatLineSegment.awtShapeValue: Shape get() = object : Shape {
     override fun contains(p: Point2D?): Boolean = p != null && contains(FloatPoint(p))
 
 
-    fun contains(point: Point<BHFloat>): Boolean = line.contains(point)
+    fun contains(point: ComputablePoint<BHFloat>): Boolean = line.contains(point)
 
 
     override fun contains(x: Double, y: Double, width: Double, height: Double): Boolean = contains(FloatRect(x, y, width, height))
