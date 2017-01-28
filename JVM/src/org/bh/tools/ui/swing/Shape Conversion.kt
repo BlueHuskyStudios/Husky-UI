@@ -1,10 +1,11 @@
 package org.bh.tools.ui.swing
 
-import org.bh.tools.base.abstraction.BHFloat
+import org.bh.tools.base.abstraction.Fraction
 import org.bh.tools.base.math.float32Value
 import org.bh.tools.base.math.geometry.ComputablePoint
-import org.bh.tools.base.math.geometry.FloatLineSegment
-import org.bh.tools.base.math.geometry.FloatRect
+import org.bh.tools.base.math.geometry.FractionLineSegment
+import org.bh.tools.base.math.geometry.FractionPoint
+import org.bh.tools.base.math.geometry.FractionRect
 import java.awt.Rectangle
 import java.awt.Shape
 import java.awt.geom.AffineTransform
@@ -19,29 +20,29 @@ import java.awt.geom.Rectangle2D
  * @author Kyli Rouge
  * @since 2016-12-11
  */
-val FloatRect.awtShapeValue: Shape get() = this.awtValue
+val FractionRect.awtShapeValue: Shape get() = this.awtValue
 
-val FloatLineSegment.awtShapeValue: Shape get() = object : Shape {
+val FractionLineSegment.awtShapeValue: Shape get() = object : Shape {
 
     private val line get() = this@awtShapeValue
 
 
-    override fun contains(x: Double, y: Double): Boolean = contains(FloatPoint(x, y))
+    override fun contains(x: Double, y: Double): Boolean = contains(FractionPoint(x, y))
 
 
-    override fun contains(p: Point2D?): Boolean = p != null && contains(FloatPoint(p))
+    override fun contains(p: Point2D?): Boolean = p != null && contains(FractionPoint(p))
 
 
-    fun contains(point: ComputablePoint<BHFloat>): Boolean = line.contains(point)
+    fun contains(point: ComputablePoint<Fraction>): Boolean = line.contains(point)
 
 
-    override fun contains(x: Double, y: Double, width: Double, height: Double): Boolean = contains(FloatRect(x, y, width, height))
+    override fun contains(x: Double, y: Double, width: Double, height: Double): Boolean = contains(FractionRect(x, y, width, height))
 
 
-    override fun contains(r: Rectangle2D?): Boolean = r != null && contains(FloatRect(r))
+    override fun contains(r: Rectangle2D?): Boolean = r != null && contains(FractionRect(r))
 
 
-    fun contains(rect: FloatRect): Boolean = rect.height == 0.0 && rect.width == 0.0 && contains(rect.origin)
+    fun contains(rect: FractionRect): Boolean = rect.height == 0.0 && rect.width == 0.0 && contains(rect.origin)
 
 
     override fun getBounds2D(): Rectangle2D = line.bounds.awtValue
@@ -84,14 +85,14 @@ val FloatLineSegment.awtShapeValue: Shape get() = object : Shape {
     }
 
     override fun intersects(x: Double, y: Double, width: Double, height: Double): Boolean
-            = intersects(FloatRect(x = x, y = y, width = width, height = height))
+            = intersects(FractionRect(x = x, y = y, width = width, height = height))
 
     override fun intersects(r: Rectangle2D?): Boolean
-            = r != null && intersects(FloatRect(r))
+            = r != null && intersects(FractionRect(r))
 
-    fun intersects(r: FloatRect): Boolean
-            = line.intersects(FloatLineSegment(r.minXminY, r.maxXmaxY))
-            || line.intersects(FloatLineSegment(r.maxXminY, r.minXmaxY))
+    fun intersects(r: FractionRect): Boolean
+            = line.intersects(FractionLineSegment(r.minXminY, r.maxXmaxY))
+            || line.intersects(FractionLineSegment(r.maxXminY, r.minXmaxY))
 
     override fun getBounds(): Rectangle = line.bounds.awtValue.bounds
 

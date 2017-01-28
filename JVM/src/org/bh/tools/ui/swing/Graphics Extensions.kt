@@ -2,7 +2,7 @@ package org.bh.tools.ui.swing
 
 import org.bh.tools.base.math.geometry.AnyLineSegment
 import org.bh.tools.base.math.geometry.AnyRect
-import org.bh.tools.base.math.geometry.floatValue
+import org.bh.tools.base.math.geometry.fractionValue
 import org.bh.tools.base.math.int32Value
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -19,14 +19,14 @@ import java.awt.RenderingHints.*
 
 fun Graphics.drawLine(line: AnyLineSegment) {
     when (this) {
-        is Graphics2D -> this.draw(line.floatValue.awtShapeValue)
+        is Graphics2D -> this.draw(line.fractionValue.awtShapeValue)
         else -> this.drawLine(line.start.x.int32Value, line.start.y.int32Value, line.end.x.int32Value, line.end.y.int32Value)
     }
 }
 
 fun Graphics.drawRect(rect: AnyRect) {
     when (this) {
-        is Graphics2D -> this.draw(rect.floatValue.awtShapeValue)
+        is Graphics2D -> this.draw(rect.fractionValue.awtShapeValue)
         else -> this.drawRect(rect.x.int32Value, rect.y.int32Value, rect.width.int32Value, rect.height.int32Value)
     }
 }
