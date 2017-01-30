@@ -4,6 +4,8 @@ import org.bh.tools.base.math.geometry.AnyLineSegment
 import org.bh.tools.base.math.geometry.AnyRect
 import org.bh.tools.base.math.geometry.fractionValue
 import org.bh.tools.base.math.int32Value
+import org.bh.tools.ui.generic.geometry.FractionOval
+import org.bh.tools.ui.swing.geometry.toAwtPath
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.RenderingHints.*
@@ -24,6 +26,7 @@ fun Graphics.drawLine(line: AnyLineSegment) {
     }
 }
 
+
 fun Graphics.drawRect(rect: AnyRect) {
     when (this) {
         is Graphics2D -> this.draw(rect.fractionValue.awtShapeValue)
@@ -31,28 +34,39 @@ fun Graphics.drawRect(rect: AnyRect) {
     }
 }
 
-//var Graphics.antiAlias: Boolean
-//    get() {
-//        return when (this) {
-//            is Graphics2D -> this.renderingHints[KEY_ANTIALIASING] != VALUE_ANTIALIAS_OFF
-//            else -> false
-//        }
-//    }
-//    set(newValue) {
-//        if (this is Graphics2D) {
-//            this.renderingHints[KEY_ANTIALIASING] = if (newValue) VALUE_ANTIALIAS_ON else VALUE_ANTIALIAS_OFF
-//        } // else nothing to do
-//    }
 
-fun Graphics.setAntiAlias(newValue: Boolean) {
-    if (this is Graphics2D) {
-        this.renderingHints[KEY_ANTIALIASING] = if (newValue) VALUE_ANTIALIAS_ON else VALUE_ANTIALIAS_OFF
-    } // else nothing to do
-}
-
-fun Graphics.isAntiAliased(): Boolean {
-    return when (this) {
-        is Graphics2D -> this.renderingHints[KEY_ANTIALIASING] != VALUE_ANTIALIAS_OFF
-        else -> false
+fun Graphics.fillOval(boundingRect: AnyRect) {
+    when (this) {
+        is Graphics2D -> this.fill(FractionOval(boundingRect = boundingRect.fractionValue).bezierPathValue.toAwtPath())
+        else -> this.drawOval(boundingRect.x.int32Value, boundingRect.y.int32Value, boundingRect.width.int32Value, boundingRect.height.int32Value)
     }
 }
+
+
+var Graphics.antiAlias: Boolean
+    get() {
+        return when (this) {
+            is Graphics2D -> this.renderingHints[KEY_ANTIALIASING] != VALUE_ANTIALIAS_OFF
+            else -> false
+        }
+    }
+    set(newValue) {
+        if (this is Graphics2D) {
+            this.renderingHints[KEY_ANTIALIASING] = if (newValue) VALUE_ANTIALIAS_ON else VALUE_ANTIALIAS_OFF
+        } // else nothing to do
+    }
+
+
+//fun Graphics.setAntiAlias(newValue: Boolean) {
+//    if (this is Graphics2D) {
+//        this.renderingHints[KEY_ANTIALIASING] = if (newValue) VALUE_ANTIALIAS_ON else VALUE_ANTIALIAS_OFF
+//    } // else nothing to do
+//}
+//
+//
+//fun Graphics.isAntiAliased(): Boolean {
+//    return when (this) {
+//        is Graphics2D -> this.renderingHints[KEY_ANTIALIASING] != VALUE_ANTIALIAS_OFF
+//        else -> false
+//    }
+//}
