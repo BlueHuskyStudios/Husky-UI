@@ -52,31 +52,48 @@ val FractionLineSegment.awtShapeValue: Shape get() = object : Shape {
 
         private val transformedLine = this@awtShapeValue.transformed(at)
         private var isEndPoint = false
+        private var processedEndPoint = false
 
         override fun next() {
             isEndPoint = true
         }
 
+        override fun isDone(): Boolean {
+            return processedEndPoint
+        }
+
         override fun getWindingRule() = WIND_NON_ZERO
 
         override fun currentSegment(coords: FloatArray?): Int {
-            if (coords != null) {
-                coords[0] = (if (isEndPoint) end else start).x.float32Value
-                coords[1] = (if (isEndPoint) end else start).y.float32Value
+            if (coords == null) {
+                return SEG_CLOSE
             }
-            return if (isEndPoint) SEG_LINETO else SEG_MOVETO
+
+            coords[0] = (if (isEndPoint) end else start).x.float32Value
+            coords[1] = (if (isEndPoint) end else start).y.float32Value
+
+            if (isEndPoint) {
+                processedEndPoint = true
+                return SEG_LINETO
+            } else {
+                return SEG_MOVETO
+            }
         }
 
         override fun currentSegment(coords: DoubleArray?): Int {
-            if (coords != null) {
-                coords[0] = (if (isEndPoint) end else start).x
-                coords[1] = (if (isEndPoint) end else start).y
+            if (coords == null) {
+                return SEG_CLOSE
             }
-            return if (isEndPoint) SEG_LINETO else SEG_MOVETO
-        }
 
-        override fun isDone(): Boolean {
-            return isEndPoint // TODO: Test to ensure this works as expected
+            coords[0] = (if (isEndPoint) end else start).x
+            coords[1] = (if (isEndPoint) end else start).y
+
+            if (isEndPoint) {
+                processedEndPoint = true
+                return SEG_LINETO
+            } else {
+                return SEG_MOVETO
+            }
         }
     }
 
