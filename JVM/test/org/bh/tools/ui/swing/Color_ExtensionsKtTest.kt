@@ -10,7 +10,7 @@ import org.junit.Test
 import java.util.logging.Logger
 
 
-private val tolerance = 0.01
+private val tolerance = 0.015
 
 
 /**
@@ -23,7 +23,7 @@ class Color_ExtensionsKtTest {
     val red50 = TestCase(name = "Red 50", rgb = rgb(255,235,238), hsl = hsl(351, 1.00, .96))
     val pink100 = TestCase(name = "Pink 100", rgb = rgb(248,187,208), hsl = hsl(339, .81, .85))
     val purple200 = TestCase(name = "Purple 200", rgb = rgb(206,147,216), hsl = hsl(291, .47, .71))
-    val deepPurple300 = TestCase(name = "Deep Purple 300", rgb = rgb(149,117,205                                 + 20), hsl = hsl(262, .47, .63))
+    val deepPurple300 = TestCase(name = "Deep Purple 300", rgb = rgb(149,117,205), hsl = hsl(262, .47, .63))
     val indigo400 = TestCase(name = "Indigo 400", rgb = rgb(92,107,192), hsl = hsl(231, .44, .56))
     val blue500 = TestCase(name = "Blue 500", rgb = rgb(33,150,243), hsl = hsl(207, .90, .54))
     val lightBlue600 = TestCase(name = "Light Blue 600", rgb = rgb(3,155,229), hsl = hsl(200, .97, .45))
