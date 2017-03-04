@@ -11,17 +11,29 @@ import kotlin.reflect.jvm.jvmName
 object LookAndFeelController {
     var currentApplicationLookAndFeel: CommonLookAndFeel
         get() = CommonLookAndFeel.from(currentSwingLookAndFeel)
-        set(newValue) { currentSwingLookAndFeelClassName = newValue.swingClassName }
+        set(newValue) {
+            if (newValue != currentApplicationLookAndFeel) {
+                currentSwingLookAndFeelClassName = newValue.swingClassName
+            }
+        }
 
 
     var currentSwingLookAndFeelClassName: String
         get() = UIManager.getLookAndFeel()::class.jvmName
-        set(newValue) = UIManager.setLookAndFeel(newValue)
+        set(newValue) {
+            if (newValue != currentSwingLookAndFeelClassName) {
+                UIManager.setLookAndFeel(newValue)
+            }
+        }
 
 
     var currentSwingLookAndFeel: LookAndFeel
         get() = UIManager.getLookAndFeel()
-        set(newValue) = UIManager.setLookAndFeel(newValue)
+        set(newValue) {
+            if (newValue != currentSwingLookAndFeel) {
+                UIManager.setLookAndFeel(newValue)
+            }
+        }
 }
 
 enum class CommonLookAndFeel(val swingClassName: String) {
