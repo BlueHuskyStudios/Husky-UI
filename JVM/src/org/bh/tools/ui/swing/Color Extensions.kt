@@ -1,7 +1,10 @@
+@file:Suppress("unused")
+
 package org.bh.tools.ui.swing
 
 import org.bh.tools.base.abstraction.*
 import org.bh.tools.base.math.*
+import java.awt.Color
 import java.awt.color.ColorSpace
 import java.lang.StrictMath.abs
 import java.util.logging.Logger
@@ -159,6 +162,32 @@ fun awtColorFromHSVA(hue: Fraction, saturation: Fraction, value: Fraction, alpha
 fun awtColor(colorSpace: ColorSpace, components: FractionArray, alpha: Fraction): java.awt.Color {
     return java.awt.Color(colorSpace, components.float32Value, alpha.float32Value)
 }
+
+
+fun awtColorFromHex(string: String): Color {
+    val bytes: List<Int>
+    val byteMatches = hexBytesRegex.findAll(string)
+    if (byteMatches.count() >= 3) {
+        bytes = byteMatches.map { it.value.toInt(0x10) }.toList()
+    } else {
+        val nibbleMatches = hexNibblesRegex.findAll(string)
+        if (nibbleMatches.count() >= 3) {
+            bytes = nibbleMatches.map { it.value.toInt(0x10) * 0x10 }.toList()
+        } else {
+            return Color.black
+        }
+    }
+
+    val red = bytes[0]
+    val green = bytes[1]
+    val blue = bytes[2]
+    val alpha = bytes.getOrNull(3) ?: 0xFF
+    return Color(red, green, blue, alpha)
+}
+
+
+private val hexBytesRegex = "([0-9A-F]{2})".toRegex(RegexOption.IGNORE_CASE)
+private val hexNibblesRegex = "([0-9A-F])".toRegex(RegexOption.IGNORE_CASE)
 
 
 val java.awt.Color.rgbaComponents: RGBAComponents get() {
