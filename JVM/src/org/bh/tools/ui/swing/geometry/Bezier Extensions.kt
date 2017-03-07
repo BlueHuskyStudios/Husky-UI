@@ -2,7 +2,7 @@
 
 package org.bh.tools.ui.swing.geometry
 
-import org.bh.tools.base.collections.first
+import org.bh.tools.base.collections.extensions.first
 import org.bh.tools.base.math.geometry.BezierPath
 import org.bh.tools.base.math.geometry.Point
 import java.awt.geom.Path2D
