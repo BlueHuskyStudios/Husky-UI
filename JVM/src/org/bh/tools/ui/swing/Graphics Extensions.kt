@@ -26,7 +26,7 @@ fun Graphics.drawLine(line: AnyLineSegment) = when (this) {
 
 
 fun Graphics.drawLine(x1: Fraction, y1: Fraction, x2: Fraction, y2: Fraction)
-= this.drawLine(FractionLineSegment(x1, y1, x2, y1))
+= this.drawLine(FractionLineSegment(x1, y1, x2, y2))
 
 
 fun Graphics.drawRect(rect: AnyRect) = when (this) {
