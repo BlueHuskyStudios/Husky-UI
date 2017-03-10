@@ -18,6 +18,12 @@ import java.awt.RenderingHints.*
  * @since 2016-11-06
  */
 
+
+
+typealias GraphicsContext = Graphics
+
+
+
 fun Graphics.drawLine(line: AnyLineSegment) = when (this) {
     is Graphics2D -> this.draw(line.fractionValue.awtShapeValue)
     else -> this.drawLine(line.start.x.int32Value, line.start.y.int32Value, line.end.x.int32Value, line.end.y.int32Value)
