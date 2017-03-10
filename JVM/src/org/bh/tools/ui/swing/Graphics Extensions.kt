@@ -1,9 +1,8 @@
 package org.bh.tools.ui.swing
 
 import org.bh.tools.base.abstraction.Fraction
-import org.bh.tools.base.math.fractionValue
+import org.bh.tools.base.math.*
 import org.bh.tools.base.math.geometry.*
-import org.bh.tools.base.math.int32Value
 import org.bh.tools.ui.generic.geometry.FractionOval
 import org.bh.tools.ui.swing.geometry.toAwtPath
 import java.awt.Graphics
@@ -26,12 +25,21 @@ fun Graphics.drawLine(line: AnyLineSegment) = when (this) {
 
 
 fun Graphics.drawLine(x1: Fraction, y1: Fraction, x2: Fraction, y2: Fraction)
-= this.drawLine(FractionLineSegment(x1, y1, x2, y2))
+    = this.drawLine(FractionLineSegment(x1, y1, x2, y2))
 
 
 fun Graphics.drawRect(rect: AnyRect) = when (this) {
     is Graphics2D -> this.draw(rect.fractionValue.awtShapeValue)
     else -> this.drawRect(rect.x.int32Value, rect.y.int32Value, rect.width.int32Value, rect.height.int32Value)
+}
+
+
+fun Graphics.drawString(string: CharSequence, x: Fraction, y: Fraction) = drawString(string, FractionPoint(x, y))
+
+
+fun Graphics.drawString(string: CharSequence, point: FractionPoint) = when (this) {
+    is Graphics2D -> this.drawString(string.toString(), point.x.float32Value, point.y.float32Value)
+    else -> this.drawString(string.toString(), point.x.int32Value, point.y.int32Value)
 }
 
 
