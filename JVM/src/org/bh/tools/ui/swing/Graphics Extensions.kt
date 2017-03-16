@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package org.bh.tools.ui.swing
 
 import org.bh.tools.base.abstraction.Fraction
@@ -24,43 +26,140 @@ typealias GraphicsContext = Graphics
 
 
 
+/**
+ * Draws the given text at the given `(x, y)` coordinates
+ *
+ * @param string The text to draw
+ * @param x      The `x` coordinate of the baseline of the text
+ * @param y      The `y` coordinate of the lead of the text
+ */
+fun Graphics.drawString(string: CharSequence, x: Fraction, y: Fraction) = when (this) {
+    is Graphics2D -> this.drawString(string.toString(), x.float32Value, y.float32Value)
+    else -> this.drawString(string.toString(), x.int32Value, y.int32Value)
+}
+
+
+/**
+ * Draws the given text at the given `(x, y)` coordinates
+ *
+ * @param string The text to draw
+ * @param point  The `(x, y)` coordinate of the baseline and lead of the text, respectively
+ */
+fun Graphics.drawString(string: CharSequence, point: FractionPoint) = drawString(string, point.x, point.y)
+
+
+/**
+ * Draws the given line segment
+ */
 fun Graphics.drawLine(line: AnyLineSegment) = when (this) {
     is Graphics2D -> this.draw(line.fractionValue.awtShapeValue)
     else -> this.drawLine(line.start.x.int32Value, line.start.y.int32Value, line.end.x.int32Value, line.end.y.int32Value)
 }
 
 
+/**
+ * Draws a line segment from `(x1, y1)` to `(x2, y2)`
+ *
+ * @param x1 The `x` coordinate of the first point of the line segment
+ * @param y1 The `y` coordinate of the first point of the line segment
+ * @param x2 The `x` coordinate of the second point of the line segment
+ * @param y2 The `y` coordinate of the second point of the line segment
+ */
 fun Graphics.drawLine(x1: Fraction, y1: Fraction, x2: Fraction, y2: Fraction)
     = this.drawLine(FractionLineSegment(x1, y1, x2, y2))
 
 
+/**
+ * Draws the stroke of the given rectangle
+ */
 fun Graphics.drawRect(rect: AnyRect) = when (this) {
     is Graphics2D -> this.draw(rect.fractionValue.awtShapeValue)
     else -> this.drawRect(rect.x.int32Value, rect.y.int32Value, rect.width.int32Value, rect.height.int32Value)
 }
 
 
-fun Graphics.drawString(string: CharSequence, x: Fraction, y: Fraction) = drawString(string, FractionPoint(x, y))
-
-
-fun Graphics.drawString(string: CharSequence, point: FractionPoint) = when (this) {
-    is Graphics2D -> this.drawString(string.toString(), point.x.float32Value, point.y.float32Value)
-    else -> this.drawString(string.toString(), point.x.int32Value, point.y.int32Value)
+/**
+ * Fills the given rectangle
+ */
+fun Graphics.fillRect(rect: AnyRect) = when (this) {
+    is Graphics2D -> this.fill(rect.fractionValue.awtShapeValue)
+    else -> this.fillRect(rect.x.int32Value, rect.y.int32Value, rect.width.int32Value, rect.height.int32Value)
 }
 
 
+/**
+ * Draws the stroke around the rectangle whose origin is at `(x, y)` and whose size is `width × height`
+ */
+fun Graphics.drawRect(x: Fraction, y: Fraction, width: Fraction, height: Fraction) = when (this) {
+    is Graphics2D -> this.draw(FractionRect(x, y, width, height).awtShapeValue)
+    else -> this.drawRect(x.int32Value, y.int32Value, width.int32Value, height.int32Value)
+}
+
+
+/**
+ * Fills the rectangle whose origin is at `(x, y)` and whose size is `width × height`
+ */
+fun Graphics.fillRect(x: Fraction, y: Fraction, width: Fraction, height: Fraction) = when (this) {
+    is Graphics2D -> this.fill(FractionRect(x, y, width, height).awtShapeValue)
+    else -> this.fillRect(x.int32Value, y.int32Value, width.int32Value, height.int32Value)
+}
+
+
+/**
+ * Draws the stroke of an oval within the given rectangle
+ */
+fun Graphics.drawOval(boundingRect: AnyRect) = when (this) {
+    is Graphics2D -> this.draw(FractionOval(boundingRect = boundingRect.fractionValue).bezierPathValue.toAwtPath())
+    else -> this.drawOval(boundingRect.x.int32Value, boundingRect.y.int32Value, boundingRect.width.int32Value, boundingRect.height.int32Value)
+}
+
+
+/**
+ * Fills an oval within the given rectangle
+ */
 fun Graphics.fillOval(boundingRect: AnyRect) = when (this) {
     is Graphics2D -> this.fill(FractionOval(boundingRect = boundingRect.fractionValue).bezierPathValue.toAwtPath())
     else -> this.fillOval(boundingRect.x.int32Value, boundingRect.y.int32Value, boundingRect.width.int32Value, boundingRect.height.int32Value)
 }
 
 
-fun Graphics.fillCircle(radius: Number, center: AnyPoint) = when (this) {
-    is Graphics2D -> this.fill(FractionOval(circularRadius = radius.fractionValue, center = center.fractionValue).bezierPathValue.toAwtPath())
-    else -> this.fillOval(FractionOval.boundingRectAroundCircle(radius = radius.fractionValue, center = center.fractionValue))
+/** Draws the stroke of the given oval */
+fun Graphics.drawOval(oval: FractionOval) = when (this) {
+    is Graphics2D -> this.draw(oval.bezierPathValue.toAwtPath())
+    else -> this.drawOval(oval.boundingRect)
 }
 
 
+/** Fills in the given oval */
+fun Graphics.fillOval(oval: FractionOval) = when (this) {
+    is Graphics2D -> this.fill(oval.bezierPathValue.toAwtPath())
+    else -> this.fillOval(oval.boundingRect)
+}
+
+
+/**
+ * Draws the stroke of a circle with the given radius and center point
+ *
+ * @param radius The distance from the center to the edge of the circle
+ * @param center The point at the center of the circle
+ */
+fun Graphics.drawCircle(radius: Number, center: AnyPoint) = drawOval(FractionOval(circularRadius = radius.fractionValue, center = center.fractionValue))
+
+
+/**
+ * Fills in a circle with the given radius and center point
+ *
+ * @param radius The distance from the center to the edge of the circle
+ * @param center The point at the center of the circle
+ */
+fun Graphics.fillCircle(radius: Number, center: AnyPoint) = fillOval(FractionOval(circularRadius = radius.fractionValue, center = center.fractionValue))
+
+
+/**
+ * Set or get whether this graphics context has anti-aliasing of any sort enabled for non-text rendering
+ *
+ * @see textAntiAlias for text anti-aliasing
+ */
 var Graphics.antiAlias: Boolean
     get() = when (this) {
         is Graphics2D -> this.getRenderingHint(KEY_ANTIALIASING) != VALUE_ANTIALIAS_OFF
@@ -73,6 +172,11 @@ var Graphics.antiAlias: Boolean
     }
 
 
+/**
+ * Set or get whether this graphics context has anti-aliasing of any sort enabled for text rendering
+ *
+ * @see antiAlias for non-text anti-aliasing
+ */
 var Graphics.textAntiAlias: TextAntiAliasApproach
     get() = when (this) {
         is Graphics2D -> TextAntiAliasApproach.fromAwtValue(this.getRenderingHint(KEY_TEXT_ANTIALIASING)) ?: TextAntiAliasApproach.none
@@ -85,7 +189,7 @@ var Graphics.textAntiAlias: TextAntiAliasApproach
     }
 
 
-/** Semantically describes text antialiasing in a limited scope */
+/** Semantically describes text anti-aliasing in a limited scope */
 enum class TextAntiAliasApproach(
         /** The version of this approach when interacting with Java AWT and Swing */
         val awtValue: Any
