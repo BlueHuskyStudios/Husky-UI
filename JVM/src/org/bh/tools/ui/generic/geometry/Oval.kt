@@ -23,7 +23,7 @@ interface Oval<NumberType : Number> : BezierPathConvertible {
 /**
  * An implementation of [Oval] that uses [Fraction]s.
  */
-class FractionOval(
+public class FractionOval(
         /**
          * The rectangle that surrounds this oval
          */
