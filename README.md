@@ -10,5 +10,6 @@ This is slowly having the JVM-specific code stripped from it. For now, parts of 
 ## See Also ##
 
  - **[Husky UI/JVM](https://github.com/BlueHuskyStudios/Husky-UI-JVM)** - The JVM-specific counterpart to this module
+ - **[LatteFX](https://github.com/BlueHuskyStudios/LatteFX)** - A separate library that simply makes JavaFX easier to swallow by adding (syntactic) sugar and "cream" (conveniences)
  - **[Blue Base/Core](https://github.com/BlueHuskyStudios/Blue-Base)** <sup>[Dependency]</sup> - The cross-platform shared basics of the BHSP
  - **[BHSP](https://github.com/BlueHuskyStudios/Blue-Husky-Software-Platform)** - The platform in which this module resides
