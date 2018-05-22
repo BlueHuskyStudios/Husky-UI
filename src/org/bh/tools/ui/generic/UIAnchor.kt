@@ -2,7 +2,7 @@ package org.bh.tools.ui.generic
 
 import org.bh.tools.base.abstraction.Fraction
 import org.bh.tools.base.math.clampToPositive
-import org.bh.tools.base.math.geometry.FractionRect
+import org.bh.tools.base.math.geometry.*
 import org.bh.tools.ui.generic.geometry.AxisOrientation
 import org.bh.tools.ui.generic.geometry.AxisOrientation.euclidean
 import org.bh.tools.ui.generic.geometry.AxisOrientation.flipped
@@ -24,25 +24,29 @@ sealed class UIAnchor(
         val yOffset: Fraction) {
 
     /** The lowest X and Y values; the [origin] */
-    class minXminY(xOffset: Fraction, yOffset: Fraction): UIAnchor(xOffset, yOffset)
-    class midXminY(xOffset: Fraction, yOffset: Fraction): UIAnchor(xOffset, yOffset)
-    class maxXminY(xOffset: Fraction, yOffset: Fraction): UIAnchor(xOffset, yOffset)
+    class minXminY(xOffset: Fraction = 0.0, yOffset: Fraction = 0.0): UIAnchor(xOffset, yOffset)
+    class midXminY(xOffset: Fraction = 0.0, yOffset: Fraction = 0.0): UIAnchor(xOffset, yOffset)
+    class maxXminY(xOffset: Fraction = 0.0, yOffset: Fraction = 0.0): UIAnchor(xOffset, yOffset)
 
-    class minXmidY(xOffset: Fraction, yOffset: Fraction): UIAnchor(xOffset, yOffset)
-    class midXmidY(xOffset: Fraction, yOffset: Fraction): UIAnchor(xOffset, yOffset)
-    class maxXmidY(xOffset: Fraction, yOffset: Fraction): UIAnchor(xOffset, yOffset)
+    class minXmidY(xOffset: Fraction = 0.0, yOffset: Fraction = 0.0): UIAnchor(xOffset, yOffset)
+    class midXmidY(xOffset: Fraction = 0.0, yOffset: Fraction = 0.0): UIAnchor(xOffset, yOffset)
+    class maxXmidY(xOffset: Fraction = 0.0, yOffset: Fraction = 0.0): UIAnchor(xOffset, yOffset)
 
-    class minXmaxY(xOffset: Fraction, yOffset: Fraction): UIAnchor(xOffset, yOffset)
-    class midXmaxY(xOffset: Fraction, yOffset: Fraction): UIAnchor(xOffset, yOffset)
-    class maxXmaxY(xOffset: Fraction, yOffset: Fraction): UIAnchor(xOffset, yOffset)
+    class minXmaxY(xOffset: Fraction = 0.0, yOffset: Fraction = 0.0): UIAnchor(xOffset, yOffset)
+    class midXmaxY(xOffset: Fraction = 0.0, yOffset: Fraction = 0.0): UIAnchor(xOffset, yOffset)
+    /** The highest X and Y values */
+    class maxXmaxY(xOffset: Fraction = 0.0, yOffset: Fraction = 0.0): UIAnchor(xOffset, yOffset)
 
-
+/* FIXME: Crashes the Kotlin compiler
     /**
-     * Moves the given rect to a new position within the given frame, using this anchor as a reference point for both rectangles, and offsetting from that reference point
+     * Moves the given rect to a new position within the given frame, using this anchor as a reference point for both
+     * rectangles, and offsetting from that reference point
      */
-    fun reposition(rect: FractionRect, withinFrame: FractionRect): FractionRect {
+    fun reposition(rect: FractionRect, within: FractionRect): FractionRect {
+        @Suppress("UnnecessaryVariable")
+        val frame = within
         return when (this) {
-            is minXminY -> rect.offset(xOffset = withinFrame.minX + xOffset, yOffset = withinFrame.minY + yOffset) // TODO: Test
+            is minXminY -> rect.copy(newX = frame.minX + xOffset, newY = frame.minY + yOffset) // TODO: Test
             is midXminY -> TODO()
             is maxXminY -> TODO()
             is minXmidY -> TODO()
@@ -50,11 +54,11 @@ sealed class UIAnchor(
             is maxXmidY -> TODO()
             is minXmaxY -> TODO()
             is midXmaxY -> TODO()
-            is maxXmaxY -> rect.copy(newOrigin = withinFrame.maxXmaxY)
+            is maxXmaxY -> rect.copy(newOrigin = frame.maxXmaxY)
                     .offset(xOffset - rect.width.clampToPositive, yOffset - rect.height.clampToPositive)
         }
     }
-
+*/
 
 
     companion object {
@@ -68,8 +72,8 @@ sealed class UIAnchor(
         @JvmStatic
         fun topLeft(y: AxisOrientation = euclidean,
                     x: AxisOrientation = euclidean,
-                    xOffset: Fraction,
-                    yOffset: Fraction
+                    xOffset: Fraction = 0.0,
+                    yOffset: Fraction = 0.0
         ): UIAnchor = when (y) {
             euclidean -> when (x) {
                 euclidean -> minXmaxY(xOffset = xOffset, yOffset = yOffset)
@@ -85,8 +89,8 @@ sealed class UIAnchor(
         @JvmStatic
         fun topRight(y: AxisOrientation = euclidean,
                      x: AxisOrientation = euclidean,
-                     xOffset: Fraction,
-                     yOffset: Fraction
+                     xOffset: Fraction = 0.0,
+                     yOffset: Fraction = 0.0
         ): UIAnchor = when (y) {
             euclidean -> when (x) {
                 euclidean -> maxXmaxY(xOffset = xOffset, yOffset = yOffset)
@@ -102,8 +106,8 @@ sealed class UIAnchor(
         @JvmStatic
         fun bottomLeft(y: AxisOrientation = euclidean,
                        x: AxisOrientation = euclidean,
-                       xOffset: Fraction,
-                       yOffset: Fraction
+                       xOffset: Fraction = 0.0,
+                       yOffset: Fraction = 0.0
         ): UIAnchor = when (y) {
             euclidean -> when (x) {
                 euclidean -> minXminY(xOffset = xOffset, yOffset = yOffset)
@@ -119,8 +123,8 @@ sealed class UIAnchor(
         @JvmStatic
         fun bottomRight(y: AxisOrientation = euclidean,
                         x: AxisOrientation = euclidean,
-                        xOffset: Fraction,
-                        yOffset: Fraction
+                        xOffset: Fraction = 0.0,
+                        yOffset: Fraction = 0.0
         ): UIAnchor = when (y) {
             euclidean -> when (x) {
                 euclidean -> maxXminY(xOffset = xOffset, yOffset = yOffset)

@@ -5,6 +5,7 @@ package org.bh.tools.ui.generic.geometry
 import org.bh.tools.base.abstraction.Fraction
 import org.bh.tools.base.math.geometry.*
 import org.bh.tools.ui.generic.geometry.FractionOval.Companion.controlPointDistanceForCircularCurveBetween
+import kotlin.math.*
 
 /**
  * An oval
@@ -36,7 +37,7 @@ public class FractionOval(
          * true circle is impossible with Bézier paths, but this gives an approximation that never wavers more than
          * 0.019608% away from a true circle.
          */
-        val controlPointPercentDistanceForCircularCurve: Fraction = (1.0 / 3.0) * (StrictMath.sqrt(7.0) - 1.0) // twice as precise as: (4.0/3.0)*(StrictMath.sqrt(2.0) - 1.0)
+        val controlPointPercentDistanceForCircularCurve: Fraction = (1.0 / 3.0) * (sqrt(7.0) - 1.0) // twice as precise as: (4.0/3.0)*(sqrt(2.0) - 1.0)
 
 
         /**
