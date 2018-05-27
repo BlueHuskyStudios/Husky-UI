@@ -42,7 +42,7 @@ enum class HuskyOptionPaneOptionType {
     /** The dialog is used to confirm that an action is going to occur, or to cancel the action  */
     okCancel,
 
-    /** The dialog is used to confirm that an action is going to (or has already) occur, or to cancel the action  */
+    /** The dialog is used to confirm that an action is going to occur or has already occurred, or to cancel the action  */
     ok,
     ;
 

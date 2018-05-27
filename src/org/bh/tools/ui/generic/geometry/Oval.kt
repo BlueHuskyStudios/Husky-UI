@@ -1,8 +1,8 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "MemberVisibilityCanBePrivate")
 
 package org.bh.tools.ui.generic.geometry
 
-import org.bh.tools.base.abstraction.Fraction
+import org.bh.tools.base.abstraction.*
 import org.bh.tools.base.math.geometry.*
 import org.bh.tools.ui.generic.geometry.FractionOval.Companion.controlPointDistanceForCircularCurveBetween
 import kotlin.math.*
@@ -24,7 +24,7 @@ interface Oval<NumberType : Number> : BezierPathConvertible {
 /**
  * An implementation of [Oval] that uses [Fraction]s.
  */
-public class FractionOval(
+class FractionOval(
         /**
          * The rectangle that surrounds this oval
          */
