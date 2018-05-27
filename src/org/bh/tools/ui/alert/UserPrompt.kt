@@ -1,6 +1,5 @@
 package org.bh.tools.ui.alert
 
-import org.bh.tools.ui.alert.HuskyOptionPaneOptionType.*
 
 
 /**
@@ -9,7 +8,7 @@ import org.bh.tools.ui.alert.HuskyOptionPaneOptionType.*
  * @author Ben Leggiero
  * @since 2017-03-01
  */
-interface HuskyUserPrompt<ParentComponent> {
+interface UserPrompt<ParentComponent> {
     fun showOptionDialog(
             parentComponent: ParentComponent? = null,
             title: String,
@@ -25,7 +24,7 @@ interface HuskyUserPrompt<ParentComponent> {
 
 
 /**
- * The option types for a [HuskyUserPrompt]
+ * The option types for a [UserPrompt]
  *
  * @author Ben Leggiero
  * @since 2017-03-01
@@ -59,7 +58,7 @@ enum class HuskyOptionPaneOptionType {
 
 
 /**
- * The message types of a [HuskyUserPrompt]
+ * The message types of a [UserPrompt]
  *
  * @author Ben Leggiero
  * @since 2017-03-01
