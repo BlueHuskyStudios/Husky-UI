@@ -13,7 +13,10 @@ import kotlin.math.*
  * @author Kyli Rouge
  * @since 2017-01-27 027.
  */
-interface Oval<NumberType : Number> : BezierPathConvertible {
+interface Oval<NumberType> : BezierPathConvertible
+    where NumberType : Number,
+          NumberType : Comparable<NumberType>
+{
     /**
      * The rectangle that surrounds this oval
      */
