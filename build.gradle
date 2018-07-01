@@ -10,12 +10,16 @@ repositories {
     mavenCentral()
 }
 
+includeBuild '../Blue-Base-Core'
+
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-common"
     testCompile "org.jetbrains.kotlin:kotlin-test-annotations-common"
     testCompile "org.jetbrains.kotlin:kotlin-test-common"
 
 
-    module("Blue Base Core")
+//    module("Blue Base Core")
 //    compile "Blue Base Core"
+
+    compile module(":Blue-Base-Core")
 }
