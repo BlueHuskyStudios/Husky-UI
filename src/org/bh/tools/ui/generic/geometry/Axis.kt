@@ -2,6 +2,7 @@
 
 package org.bh.tools.ui.generic.geometry
 
+import org.bh.tools.base.shim.*
 import org.bh.tools.ui.generic.geometry.AxisOrientation.*
 
 
