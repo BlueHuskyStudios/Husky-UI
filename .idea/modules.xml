@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../Blue-Base/Blue Base Core.iml" filepath="$PROJECT_DIR$/../Blue-Base/Blue Base Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Blue-Base/Blue-Base.iml" filepath="$PROJECT_DIR$/../Blue-Base/Blue-Base.iml" />
       <module fileurl="file://$PROJECT_DIR$/Husky UI Core.iml" filepath="$PROJECT_DIR$/Husky UI Core.iml" />
     </modules>
   </component>

@@ -1,7 +1,8 @@
+@file:Suppress("unused")
+
 package org.bh.tools.ui.generic
 
 import org.bh.tools.base.abstraction.Fraction
-import org.bh.tools.base.shim.*
 import org.bh.tools.ui.generic.geometry.AxisOrientation
 import org.bh.tools.ui.generic.geometry.AxisOrientation.euclidean
 import org.bh.tools.ui.generic.geometry.AxisOrientation.flipped

@@ -17,8 +17,6 @@
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="module" module-name="Blue Base Core" exported="" />
-    <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit4">
@@ -30,5 +28,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="Blue-Base" />
+    <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
